@@ -3,6 +3,7 @@ package com.paremin.conversion;
 import com.paremin.model.ConversionTask;
 
 import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * Strategy interface for format-specific image converters.
@@ -23,4 +24,17 @@ public interface ImageConverter {
      * e.g. "PNG_TO_JPEG", "JPEG_TO_WEBP"
      */
     String getConversionKey();
+
+    /**
+     * Validates the input file exists and is readable.
+     * Called by all converters before processing.
+     */
+    default void validate(ConversionTask task) throws IOException {
+        if (!Files.exists(task.getInputPath())) {
+            throw new IOException("Input file not found: " + task.getInputPath());
+        }
+        if (!Files.isReadable(task.getInputPath())) {
+            throw new IOException("Input file is not readable: " + task.getInputPath());
+        }
+    }
 }
