@@ -13,9 +13,9 @@ public class ConverterRegistry {
 
     public ConverterRegistry() {
         register(new PngToJpegConverter());
-        register(new PngToWebpConverter());
         register(new JpegToPngConverter());
-        register(new JpegToWebpConverter());
+        register(new WebpToJpegConverter());
+        register(new WebpToPngConverter());
     }
 
     public void register(ImageConverter converter) {
